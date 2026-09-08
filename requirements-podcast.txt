@@ -1,0 +1,2 @@
+# Additional dependency for podcast_gui.py's in-process Windows audio player.
+pywin32==312; sys_platform == "win32"
