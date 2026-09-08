@@ -27,7 +27,7 @@ PREVIEW_DIR = Path(tempfile.gettempdir()) / "BritishVoiceStudio"
 PREVIEW_METADATA = PREVIEW_DIR / "last-preview.json"
 
 BRITISH_GENTLE_VOICE = "英式温柔风"
-AMERICAN_REFERENCE_VOICE = "美式风 · 15号高保真（本机 GPU）"
+AMERICAN_REFERENCE_VOICE = "美式风2x"
 LOCAL_VOICE_REFERENCES = {
     BRITISH_GENTLE_VOICE: APP_DIR / "参考音色" / "英式温柔风参考.wav",
     AMERICAN_REFERENCE_VOICE: APP_DIR / "参考音色" / "美式风参考-15号视频-自然连续段.wav",

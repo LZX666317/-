@@ -100,6 +100,8 @@ class PodcastGuiTests(unittest.TestCase):
         self.assertEqual(self.app.playback_rate_text.get(), "1.35×")
 
     def test_american_warm_profile_uses_approved_slow_unpitched_defaults(self):
+        self.assertEqual(podcast_gui.AMERICAN_REFERENCE_VOICE, "美式风2x")
+        self.assertIn("美式风2x", podcast_gui.VOICES)
         self.app.rate_var.set(12)
         self.app.pitch_var.set(8)
         self.app.voice_var.set(podcast_gui.AMERICAN_REFERENCE_VOICE)
@@ -164,6 +166,20 @@ class PodcastGuiTests(unittest.TestCase):
         run.assert_not_called()
         self.assertEqual(popen.call_count, 1)
         self.assertEqual(popen.call_args.args[0][0], "explorer.exe")
+
+    def test_save_american_preview_uses_2x_filename(self):
+        output_dir = Path(self.tempdir.name) / "audio-output"
+        self.app.preview_output = self.preview
+        self.app.preview_saved = False
+        self.app.preview_style = podcast_gui.AMERICAN_REFERENCE_VOICE
+
+        with patch.object(podcast_gui, "OUTPUT_DIR", output_dir), patch.object(
+            podcast_gui.subprocess, "Popen"
+        ), patch.object(podcast_gui.messagebox, "showinfo"):
+            self.app.save_preview()
+
+        self.assertIsNotNone(self.app.last_output)
+        self.assertTrue(self.app.last_output.name.startswith("英语播客-美式风2x-"))
 
     def test_async_rate_failure_restores_slider_and_label_to_player_rate(self):
         self.app.playback_rate_var.set(1.75)
